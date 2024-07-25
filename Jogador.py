@@ -1,0 +1,45 @@
+import math
+from Utils.Cores import *
+from Utils.Telas import *
+
+class Jogador(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.Surface((20, 20))
+        self.image.fill(COR_VERDE)
+        self.rect = self.image.get_rect()
+        self.rect.center = (LARGURA - 60, ALTURA / 2)
+
+    def movimentacao(self):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_a]:
+            self.rect.x -= 14
+        if keys[pygame.K_d]:
+            self.rect.x += 14
+        if keys[pygame.K_s]:
+            self.rect.y += 14
+        if keys[pygame.K_w]:
+            self.rect.y -= 14
+
+    def agarrar(self, bola):
+        dx = self.rect.x - bola.rect.x
+        dy = self.rect.y - bola.rect.y
+        distancia = (dx ** 2 + dy ** 2) ** 0.5
+
+        limite_distancia = 50
+
+        if distancia <= limite_distancia:
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_SPACE]:
+                deslocamento_x = 20
+                bola.rect.centerx = self.rect.centerx + deslocamento_x
+                bola.rect.centery = self.rect.centery
+
+    def colisao_arremesso(self, bola):
+        dx_jogador = bola.rect.x - self.rect.x
+        dy_jogador = bola.rect.y - self.rect.y
+        if pygame.sprite.collide_rect(self, bola):
+            angulo = math.atan2(dy_jogador, dx_jogador)
+            while bola in TELA_DIREITA:
+                velocidade_horizontal = 10 * math.cos(angulo)
+                bola.rect.x += int(velocidade_horizontal)
