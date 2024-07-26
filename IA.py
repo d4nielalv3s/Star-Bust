@@ -1,4 +1,5 @@
 import random
+import math
 from Utils.Cores import *
 from Utils.Telas import *
 

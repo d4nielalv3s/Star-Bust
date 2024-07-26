@@ -1,4 +1,5 @@
 import math
+import random
 from Utils.Cores import *
 from Utils.Telas import *
 
@@ -38,8 +39,11 @@ class Jogador(pygame.sprite.Sprite):
     def colisao_arremesso(self, bola):
         dx_jogador = bola.rect.x - self.rect.x
         dy_jogador = bola.rect.y - self.rect.y
-        if pygame.sprite.collide_rect(self, bola):
+
+        if self.rect.colliderect(bola.rect):
+            forca_arremesso = 20
             angulo = math.atan2(dy_jogador, dx_jogador)
-            while bola in TELA_DIREITA:
-                velocidade_horizontal = 10 * math.cos(angulo)
-                bola.rect.x += int(velocidade_horizontal)
+            velocidade_horizontal = forca_arremesso * math.cos(angulo)
+            bola.rect.x -= int(velocidade_horizontal)
+            bola.rect.x = random.randint(0, LARGURA // 2 - bola.rect.width)
+            bola.rect.y = random.randint(0, ALTURA - bola.rect.height)

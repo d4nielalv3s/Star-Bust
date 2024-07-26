@@ -26,12 +26,12 @@ while running:
             running = False
             exit()
 
-    trave.desenhar()
-    trave.bloquear(ia.rect, jogador.rect)
     jogador.movimentacao()
+    trave.desenhar()
     ia.movimentacao_ia()
     jogador.agarrar(bola)
     jogador.colisao_arremesso(bola)
+    trave.bloquear(ia.rect, jogador.rect)
     if bola in TELA_ESQUERDA:
         ia.persequir(bola)
     if pygame.sprite.collide_rect(bola, ia):
