@@ -36,6 +36,8 @@ while running:
         ia.persequir(bola)
     if pygame.sprite.collide_rect(bola, ia):
         bola.pos_colisao(ia)
+    manter_dentro_dos_limites(jogador)
+    manter_dentro_dos_limites(ia)
 
     tela.fill(COR_BRANCA)
     tela.blit(bola.image, bola.rect)
